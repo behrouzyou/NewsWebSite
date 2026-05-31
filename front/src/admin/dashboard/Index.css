@@ -3,7 +3,7 @@
  }
 
 .main-info{
-    background-color: blue;
+    background: rgb(188, 198, 207);
     width: calc(100% - 300px);
 }
 .main{

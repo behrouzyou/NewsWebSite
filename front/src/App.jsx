@@ -2,16 +2,22 @@ import "./index.css";
 import "../node_modules/bulma/css/bulma.css";
 import Login from "./admin/auth/Login";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "./admin/dashboard/Dashboard";
 import NotFound from "./pages/NotFound.jsx";
 import { ToastContainer } from "react-toastify";
+import ViewNews from "./admin/dashboard/components/news/ViewNews.jsx";
+import Base from "./admin/dashboard/components/main/Base.jsx";
+import AddNews from "./admin/dashboard/components/news/AddNews.jsx";
 
 function App() {
   return (
     <>
+
       <Routes>
         <Route path="/administrator" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/dashboard" element={<Base />} />
+        <Route path="/view-news" element={<ViewNews />} />
+        <Route path="/add-news" element={<AddNews />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer  />

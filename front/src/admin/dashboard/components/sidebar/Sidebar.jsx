@@ -1,7 +1,10 @@
 import "./Sidebar.css";
 import logo from "../../../../../public/images/logo.png"
 import { Link } from "react-router-dom";
+import { useState } from "react";
 function Sidebar() {
+    const[showNews,setShowNews]=useState()
+
   return (
     <div className="sidebar">
       <div className="logo mb-5 has-text-centered">
@@ -12,7 +15,15 @@ function Sidebar() {
             <Link to="/dashboard">داشبورد</Link>
         </li>
         <li>
-            <Link to="">اخبار</Link>
+            <div onClick={()=>setShowNews(!showNews)}><span >اخبار</span></div>
+            { showNews &&
+               <ul>
+                <li>
+                    <Link to='/add-news'>افزودن خبر</Link></li>
+                   <li> <Link to='/view-news'>مشاهده خبر</Link>
+                </li>
+            </ul>}
+
         </li>
         <li>
             <Link to="">دسته بندی</Link>
