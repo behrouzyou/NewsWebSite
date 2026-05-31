@@ -1,0 +1,12 @@
+ .dashboard-wrapper{
+    display: flex;
+ }
+
+.main-info{
+    background-color: blue;
+    width: calc(100% - 300px);
+}
+.main{
+    padding: 30px 250px;
+    width: 100%;
+}

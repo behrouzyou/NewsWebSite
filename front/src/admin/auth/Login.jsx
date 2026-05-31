@@ -3,6 +3,7 @@ import {useFormik} from 'formik'
 import { useContext } from "react";
 import * as Yup from 'yup'
 import { AuthContext } from "../context/context";
+import axios from "axios";
 
     const formValidate=Yup.object({
         email:Yup.string().email("فرمت ایمیل به درستی وارد نشده است").required("لطفا ایمیل خود را وارد کنید"),
