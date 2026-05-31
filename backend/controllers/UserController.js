@@ -55,13 +55,13 @@ export const Login = async (req, res) => {
         email: req.body.email,
       },
     });
-    
+
     const match = await bcrypt.compare(req.body.password, user[0].password);
-    if (!match) {
-      return res.json({
-        error: "پسوورد اشتباه است"
-      });
-    }
+    // if (!match) {//attention  this section check password match in login page for online host uncomment this section
+    //   return res.json({
+    //     error: "پسوورد اشتباه است"
+    //   });
+    // }
     const userId = user[0].id;
     const name = user[0].name;
     const email = user[0].email;
@@ -167,7 +167,7 @@ export const updateUser = async (req,res) =>{
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt)
   try {
-    
+
     await Users.update({
       name: name,
       email: email,
@@ -193,7 +193,7 @@ export const updateProfile = async(req,res)=>{
   })
 
   if(!avatar) return res.status(404).json({msg: "کاربری پیدا نشد"})
-  
+
   let fileName = "";
   if(req.files === null){
     fileName = avatar.image
@@ -205,10 +205,10 @@ export const updateProfile = async(req,res)=>{
     fileName = dateNow + ext
     const allowedType = ['.png','.jpg','.jpeg'];
     if(!allowedType.includes(ext.toLowerCase())){
-      return res.json("jpeg jpg png عکس معتبر نیست * فرمت های مجاز ") 
+      return res.json("jpeg jpg png عکس معتبر نیست * فرمت های مجاز ")
     }
     if(fileSize > 1000000) return res.json("حجم عکس نباید بیشتر از 1 مگابایت باشد")
-    
+
     if(avatar.image){
       const filePath = `./public/avatars/${avatar.image}`
       fs.unlinkSync(filePath)

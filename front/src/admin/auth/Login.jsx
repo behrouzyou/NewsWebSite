@@ -13,7 +13,7 @@ import { AuthContext } from "../context/context";
 
 
 const Login = () => {
-    const {login}=useContext(AuthContext)
+    const {login,error}=useContext(AuthContext)
 
 
     const formik=useFormik({
@@ -39,6 +39,7 @@ const Login = () => {
                 <h1 className="title has-tex-centered mb-5">
                   ورود به پنل مدیریت
                 </h1>
+                <h1 className="has-text-centered has-text-danger py-3">{error}</h1>
                 <div className="field">
                   <label className="label">ایمیل</label>
                   <div className="control">
