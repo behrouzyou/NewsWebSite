@@ -80,6 +80,7 @@ export const AuthContextProvider = ({ children }) => {
         setAdmin(res.data.isAdmin);
         setToken(res.data.accessToken);
       }
+
     } catch (error) {
       console.log(error);
     }
@@ -96,9 +97,39 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const createNews=async (db) => {
+
+      const formData=new FormData()
+      formData.append("title",db.title);
+      formData.append("desc",db.desc);
+      formData.append("catId",db.catId);
+      formData.append("userId",userId);
+      formData.append("file",db.file);
+      console.log(formData);
+      try {
+        const res=await axiosJWT.post("http://localhost:5000/api/news",formData,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+         toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+       navigate("/view-news")
+      } catch (error) {
+        console.log(error);
+      }
+  }
 
   return (
-    <AuthContext.Provider value={{ login, error, getAllUsers }}>
+    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews }}>
       {children}
     </AuthContext.Provider>
   );
