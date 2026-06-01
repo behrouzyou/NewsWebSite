@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import swal from 'sweetalert'
 
 export const AuthContext = createContext();
 axios.defaults.withCredentials = true;
@@ -15,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [admin, setAdmin] = useState(null);
   const [expire, setExpire] = useState("");
+  const [news,setNews]=useState([])
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -127,9 +129,96 @@ export const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
   }
+//    const singleNews=async (id) => {
 
+
+//     try {
+//             const res=await axiosJWT.get(`http://localhost:5000/api/news/${id}`,{
+//                 headers:{
+//                     Authorization:`Bearer ${token}`
+//                 }
+//             })
+
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+
+//    }
+   const EditNews=async (db,id) => {
+
+      const formData=new FormData()
+      formData.append("title",db.title);
+      formData.append("desc",db.desc);
+      formData.append("catId",db.catId);
+      formData.append("userId",userId);
+      formData.append("file",db.file);
+      console.log(formData);
+      console.log();
+      try {
+        const res=await axiosJWT.put(`http://localhost:5000/api/news/${id}`,formData,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+         toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+       navigate("/view-news")
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
+
+const handleNews=async () => {
+       try {
+        const res=await axiosJWT.get("http://localhost:5000/api/news",{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        setNews(res.data)
+
+       } catch (error) {
+        console.log(error);
+       }
+ }
+ const deleteNews=async (id) => {
+      const willDelete = await swal({
+  title: "حذف کردن",
+  text: "آیا از حذف خبر اطمینان دارید",
+  icon: "warning",
+   buttons: ["انصراف", "حذف"],
+  dangerMode: true,
+});
+
+if (willDelete) {
+    try {
+        const res=await axiosJWT.delete(`http://localhost:5000/api/news/${id}`,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        swal( res.data.msg, "success");
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+ }
   return (
-    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews }}>
+    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews,handleNews,news,deleteNews,EditNews }}>
       {children}
     </AuthContext.Provider>
   );

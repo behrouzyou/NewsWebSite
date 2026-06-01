@@ -5,23 +5,11 @@ import { useContext,useEffect, useState} from "react"
 import { AuthContext } from "../../../context/context"
 
 const ViewNews=()=> {
- const{axiosJWT,token}=useContext(AuthContext)
- const [news,setNews]=useState([])
+ const{handleNews,news,deleteNews}=useContext(AuthContext)
 
 
- const handleNews=async () => {
-       try {
-        const res=await axiosJWT.get("http://localhost:5000/api/news",{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        setNews(res.data)
 
-       } catch (error) {
-        console.log(error);
-       }
- }
+
 useEffect(() => {
    handleNews()
 
@@ -48,15 +36,15 @@ useEffect(() => {
                 {
                    news && news.map((nw,index)=>{
                     return(
-                         <tr key={nw.createdAt}>
+                         <tr key={nw.id}>
                     <td>{index + 1}</td>
                     <td>{nw.title}</td>
                     <td><img src={nw.url} alt="" width='100'/></td>
                     <td>{nw.user.name}</td>
                     <td>
-                        <button className="button is-success ">ویرایش</button>
+                        <Link to={`/edit-news/${nw.id}`} className="button is-success " state={{title:nw.title,desc:nw.desc,image:nw.url,name:nw.id,catId:nw.catId}} >ویرایش</Link>
                     </td>
-                    <td><button className="button is-danger">حذف</button></td>
+                    <td><button onClick={()=>deleteNews(nw.id)} className="button is-danger">حذف</button></td>
                 </tr>
                     )
                    })

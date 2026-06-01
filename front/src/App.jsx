@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import ViewNews from "./admin/dashboard/components/news/ViewNews.jsx";
 import Base from "./admin/dashboard/components/main/Base.jsx";
 import AddNews from "./admin/dashboard/components/news/AddNews.jsx";
+import EditNews from "./admin/dashboard/components/news/EditNews.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Base />} />
         <Route path="/view-news" element={<ViewNews />} />
         <Route path="/add-news" element={<AddNews />} />
+        <Route path="/edit-news/:id" element={<EditNews />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer  />

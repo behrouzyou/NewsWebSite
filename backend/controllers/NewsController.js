@@ -97,7 +97,7 @@ export const updateNews = async (req, res) => {
 
       const filePath = `./public/images/${news.image}`;
       fs.unlinkSync(filePath)
-  
+
       file.mv(`./public/images/${fileName}`, (err) => {
            if(err) return res.json({msg: err.message})
       })
@@ -208,7 +208,7 @@ export const popularNews = async(req,res)=>{
 export const getCatNews = async(req, res)=>{
   try {
     const hasCategory = req.query.cat
-    
+
     const news = hasCategory ?
       await News.findAll({
         where: {catId: hasCategory},
