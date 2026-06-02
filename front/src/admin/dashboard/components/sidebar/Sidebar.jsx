@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 function Sidebar() {
     const[showNews,setShowNews]=useState()
+    const[showCat,setShowCat]=useState()
 
   return (
     <div className="sidebar">
@@ -19,14 +20,22 @@ function Sidebar() {
             { showNews &&
                <ul>
                 <li>
-                    <Link to='/add-news'>افزودن خبر</Link></li>
-                   <li> <Link to='/view-news'>مشاهده خبر</Link>
+                    <Link style={{background:"white"}} to='/add-news'>افزودن خبر</Link></li>
+                   <li> <Link style={{background:"white"}} to='/view-news'>مشاهده خبر</Link>
                 </li>
             </ul>}
 
         </li>
         <li>
-            <Link to="">دسته بندی</Link>
+            <div onClick={()=>setShowCat(!showCat)}><span >دسته بندی</span></div>
+            { showCat &&
+               <ul>
+                <li>
+                    <Link style={{background:"white",}} to='/add-category'>افزودن دسته بندی</Link></li>
+                   <li> <Link style={{background:"white"}} to='/view-category'>مشاهده دسته بندی</Link>
+                </li>
+            </ul>}
+
         </li>
         <li>
             <Link to="">ویدیو</Link>

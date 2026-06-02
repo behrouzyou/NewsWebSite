@@ -17,6 +17,7 @@ export const AuthContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [expire, setExpire] = useState("");
   const [news,setNews]=useState([])
+   const [categoryList, setCategoryList] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -107,7 +108,7 @@ export const AuthContextProvider = ({ children }) => {
       formData.append("catId",db.catId);
       formData.append("userId",userId);
       formData.append("file",db.file);
-      console.log(formData);
+
       try {
         const res=await axiosJWT.post("http://localhost:5000/api/news",formData,{
             headers:{
@@ -129,6 +130,49 @@ export const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
   }
+  const createCategory=async (cat) => {
+    const formData=new FormData
+    formData.append("name",cat.name)
+    formData.append("userId",userId)
+
+    try {
+        const res=await axiosJWT.post("http://localhost:5000/api/create-category",formData,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        console.log(res);
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+       navigate("/view-category")
+    } catch (error) {
+          console.log(error);
+    }
+
+ }
+
+ const getCategory = async () => {
+    try {
+      const res = await axiosJWT.get("http://localhost:5000/api/get-category", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCategoryList(res.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 //    const singleNews=async (id) => {
 
 
@@ -176,6 +220,37 @@ export const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
   }
+  const updateCategory=async (db,id) => {
+    const formData=new FormData()
+    formData.append("name",db.name)
+    formData.append("id",db.id)
+    formData.append("userId",userId)
+    console.log(formData);
+    try {
+        const res=await axiosJWT.put(`http://localhost:5000/api/update-category/${id}`,formData,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+
+        })
+
+         toast.success(res.data, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+       navigate("/view-category")
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
+
 
 
 const handleNews=async () => {
@@ -214,11 +289,38 @@ if (willDelete) {
     }
 
 }
-
-
  }
+
+
+ const deleteCategory=async (id) => {
+      const willDelete = await swal({
+  title: "حذف کردن",
+  text: "آیا از حذف دسته اطمینان دارید",
+  icon: "warning",
+   buttons: ["انصراف", "حذف"],
+  dangerMode: true,
+});
+
+if (willDelete) {
+    try {
+        const res=await axiosJWT.delete(`http://localhost:5000/api/delete-category/${id}`,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        swal( res.data.msg, "success");
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+ }
+
+
   return (
-    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews,handleNews,news,deleteNews,EditNews }}>
+    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews,handleNews,news,deleteNews,EditNews,createCategory,categoryList,
+getCategory,deleteCategory,updateCategory}}>
       {children}
     </AuthContext.Provider>
   );

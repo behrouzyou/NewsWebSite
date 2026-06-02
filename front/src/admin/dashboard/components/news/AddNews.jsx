@@ -11,8 +11,8 @@ const formSchema = Yup.object({
 });
 
 const AddNews = () => {
-  const { axiosJWT, token,createNews} = useContext(AuthContext);
-  const [categoryList, setCategoryList] = useState([]);
+  const {getCategory,categoryList,createNews} = useContext(AuthContext);
+
   const [file, setFile] = useState([]);
   const [preview, setPreview] = useState("");
 
@@ -22,19 +22,7 @@ const AddNews = () => {
     setPreview(URL.createObjectURL(image));
   };
 
-  const getCategory = async () => {
-    try {
-      const res = await axiosJWT.get("http://localhost:5000/api/get-category", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCategoryList(res.data);
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
 
     getCategory();

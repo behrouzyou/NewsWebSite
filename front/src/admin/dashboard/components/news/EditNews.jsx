@@ -15,8 +15,8 @@ const formSchema = Yup.object({
 
 
 const EditNews = () => {
-    const location=useLocation()
-    const stat=location.state
+    const {state}=useLocation()
+
 
 
 
@@ -56,10 +56,10 @@ const EditNews = () => {
 
    const formik = useFormik({
       initialValues: {
-        title: stat.title,
-        desc: stat.desc,
-        catId:stat.catId,
-        file: stat.image,
+        title: state.title,
+        desc: state.desc,
+        catId:state.catId,
+        file: state.image,
       },
       onSubmit: (values) => {
           const data={
@@ -68,7 +68,7 @@ const EditNews = () => {
               catId:values.catId,
               file:file
           }
-        EditNews(data,stat.name);
+        EditNews(data,state.name);
 
       },
       validationSchema: formSchema,
