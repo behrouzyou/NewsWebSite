@@ -5,6 +5,7 @@ import { useState } from "react";
 function Sidebar() {
     const[showNews,setShowNews]=useState()
     const[showCat,setShowCat]=useState()
+    const [showVideo,setShowVideo]=useState()
 
   return (
     <div className="sidebar">
@@ -38,7 +39,14 @@ function Sidebar() {
 
         </li>
         <li>
-            <Link to="">ویدیو</Link>
+           <div onClick={()=>setShowVideo(!showVideo)}><span >ویدیو</span></div>
+            { showVideo &&
+               <ul>
+                <li>
+                    <Link style={{background:"white",}} to='/add-video'>افزودن ویدیو </Link></li>
+                   <li> <Link style={{background:"white"}} to='/view-video'>مشاهده ویدیو </Link>
+                </li>
+            </ul>}
         </li>
         <li>
             <Link to="">کاربران</Link>

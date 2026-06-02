@@ -11,6 +11,8 @@ import EditNews from "./admin/dashboard/components/news/EditNews.jsx";
 import ViewCategory from "./admin/dashboard/components/category/ViewCategory.jsx";
 import AddCategory from "./admin/dashboard/components/category/AddCategory.jsx";
 import EditCategory from "./admin/dashboard/components/category/EditCategory.jsx";
+import ViewVideo from "./admin/dashboard/components/video/ViewVideo.jsx";
+import AddVideo from "./admin/dashboard/components/video/AddVideo.jsx";
 
 function App() {
   return (
@@ -23,9 +25,11 @@ function App() {
         <Route path="/view-news" element={<ViewNews />} />
         <Route path="/add-news" element={<AddNews />} />
         <Route path="/edit-news/:id" element={<EditNews />} />
-        <Route path="/view-category/" element={<ViewCategory />} />
-        <Route path="/add-category/" element={<AddCategory/>} />
-        <Route path="/edit-category/" element={<EditCategory/>} />
+        <Route path="/view-category" element={<ViewCategory />} />
+        <Route path="/add-category" element={<AddCategory/>} />
+        <Route path="/edit-category" element={<EditCategory/>} />
+        <Route path="/view-video" element={<ViewVideo/>}/>
+        <Route path="/add-video" element={<AddVideo/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer  />

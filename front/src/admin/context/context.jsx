@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-import swal from 'sweetalert'
+import swal from "sweetalert";
 
 export const AuthContext = createContext();
 axios.defaults.withCredentials = true;
@@ -16,8 +16,9 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [admin, setAdmin] = useState(null);
   const [expire, setExpire] = useState("");
-  const [news,setNews]=useState([])
-   const [categoryList, setCategoryList] = useState([]);
+  const [news, setNews] = useState([]);
+  const[videoList,setVideoList]=useState([])
+  const [categoryList, setCategoryList] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -83,7 +84,6 @@ export const AuthContextProvider = ({ children }) => {
         setAdmin(res.data.isAdmin);
         setToken(res.data.accessToken);
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -100,66 +100,114 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const createNews=async (db) => {
-
-      const formData=new FormData()
-      formData.append("title",db.title);
-      formData.append("desc",db.desc);
-      formData.append("catId",db.catId);
-      formData.append("userId",userId);
-      formData.append("file",db.file);
-
-      try {
-        const res=await axiosJWT.post("http://localhost:5000/api/news",formData,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-         toast.success(res.data.msg, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-       navigate("/view-news")
-      } catch (error) {
-        console.log(error);
-      }
-  }
-  const createCategory=async (cat) => {
-    const formData=new FormData
-    formData.append("name",cat.name)
-    formData.append("userId",userId)
+  const createNews = async (db) => {
+    const formData = new FormData();
+    formData.append("title", db.title);
+    formData.append("desc", db.desc);
+    formData.append("catId", db.catId);
+    formData.append("userId", userId);
+    formData.append("file", db.file);
 
     try {
-        const res=await axiosJWT.post("http://localhost:5000/api/create-category",formData,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        console.log(res);
-        toast.success(res.data.msg, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-       navigate("/view-category")
+      const res = await axiosJWT.post(
+        "http://localhost:5000/api/news",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/view-news");
     } catch (error) {
-          console.log(error);
+      console.log(error);
     }
+  };
+  const createCategory = async (cat) => {
+    const formData = new FormData();
+    formData.append("name", cat.name);
+    formData.append("userId", userId);
 
- }
+    try {
+      const res = await axiosJWT.post(
+        "http://localhost:5000/api/create-category",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
- const getCategory = async () => {
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/view-category");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const createVideo = async (data) => {
+    const formData = new FormData();
+    formData.append("file", data.file);
+    formData.append("userId", userId);
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/create-video",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if(res.data.msg){
+        toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+        navigate("/view-video");}else{
+            toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+        }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCategory = async () => {
     try {
       const res = await axiosJWT.get("http://localhost:5000/api/get-category", {
         headers: {
@@ -167,160 +215,224 @@ export const AuthContextProvider = ({ children }) => {
         },
       });
       setCategoryList(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllVideo=async () => {
+    try {
+        const res=await axiosJWT.get("http://localhost:5000/api/get-video",{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setVideoList(res.data)
 
+    } catch (error) {
+        console.log(error);
+    }
+
+  }
+
+  //    const singleNews=async (id) => {
+
+  //     try {
+  //             const res=await axiosJWT.get(`http://localhost:5000/api/news/${id}`,{
+  //                 headers:{
+  //                     Authorization:`Bearer ${token}`
+  //                 }
+  //             })
+
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+
+  //    }
+  const EditNews = async (db, id) => {
+    const formData = new FormData();
+    formData.append("title", db.title);
+    formData.append("desc", db.desc);
+    formData.append("catId", db.catId);
+    formData.append("userId", userId);
+    formData.append("file", db.file);
+    console.log(formData);
+    console.log();
+    try {
+      const res = await axiosJWT.put(
+        `http://localhost:5000/api/news/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/view-news");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateCategory = async (db, id) => {
+    const formData = new FormData();
+    formData.append("name", db.name);
+    formData.append("id", db.id);
+    formData.append("userId", userId);
+    console.log(formData);
+    try {
+      const res = await axiosJWT.put(
+        `http://localhost:5000/api/update-category/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      toast.success(res.data, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/view-category");
     } catch (error) {
       console.log(error);
     }
   };
 
-//    const singleNews=async (id) => {
+  const handleNews = async () => {
+    try {
+      const res = await axiosJWT.get("http://localhost:5000/api/news", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setNews(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteNews = async (id) => {
+    const willDelete = await swal({
+      title: "حذف کردن",
+      text: "آیا از حذف خبر اطمینان دارید",
+      icon: "warning",
+      buttons: ["انصراف", "حذف"],
+      dangerMode: true,
+    });
 
-
-//     try {
-//             const res=await axiosJWT.get(`http://localhost:5000/api/news/${id}`,{
-//                 headers:{
-//                     Authorization:`Bearer ${token}`
-//                 }
-//             })
-
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-//    }
-   const EditNews=async (db,id) => {
-
-      const formData=new FormData()
-      formData.append("title",db.title);
-      formData.append("desc",db.desc);
-      formData.append("catId",db.catId);
-      formData.append("userId",userId);
-      formData.append("file",db.file);
-      console.log(formData);
-      console.log();
+    if (willDelete) {
       try {
-        const res=await axiosJWT.put(`http://localhost:5000/api/news/${id}`,formData,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-         toast.success(res.data.msg, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-       navigate("/view-news")
+        const res = await axiosJWT.delete(
+          `http://localhost:5000/api/news/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        swal(res.data.msg, "success");
+        handleNews();
       } catch (error) {
         console.log(error);
       }
-  }
-  const updateCategory=async (db,id) => {
-    const formData=new FormData()
-    formData.append("name",db.name)
-    formData.append("id",db.id)
-    formData.append("userId",userId)
-    console.log(formData);
-    try {
-        const res=await axiosJWT.put(`http://localhost:5000/api/update-category/${id}`,formData,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
+    }
+  };
 
-        })
+  const deleteCategory = async (id) => {
+    const willDelete = await swal({
+      title: "حذف کردن",
+      text: "آیا از حذف دسته اطمینان دارید",
+      icon: "warning",
+      buttons: ["انصراف", "حذف"],
+      dangerMode: true,
+    });
 
-         toast.success(res.data, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-       navigate("/view-category")
+    if (willDelete) {
+      try {
+        const res = await axiosJWT.delete(
+          `http://localhost:5000/api/delete-category/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        getCategory();
+        swal(res.data.msg, "success");
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+  const deleteVideo=async (id) => {
+     const willDelete = await swal({
+      title: "حذف کردن",
+      text: "آیا از حذف ویدیو اطمینان دارید",
+      icon: "warning",
+      buttons: ["انصراف", "حذف"],
+      dangerMode: true,
+    });
+
+    if (willDelete) {
+      try {
+        const res = await axiosJWT.delete(
+          `http://localhost:5000/api/delete-video/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        swal(res.data.msg, "success");
+        getAllVideo()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
   }
-
-
-
-
-const handleNews=async () => {
-       try {
-        const res=await axiosJWT.get("http://localhost:5000/api/news",{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        setNews(res.data)
-
-       } catch (error) {
-        console.log(error);
-       }
- }
- const deleteNews=async (id) => {
-      const willDelete = await swal({
-  title: "حذف کردن",
-  text: "آیا از حذف خبر اطمینان دارید",
-  icon: "warning",
-   buttons: ["انصراف", "حذف"],
-  dangerMode: true,
-});
-
-if (willDelete) {
-    try {
-        const res=await axiosJWT.delete(`http://localhost:5000/api/news/${id}`,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        swal( res.data.msg, "success");
-
-    } catch (error) {
-        console.log(error);
-    }
-
-}
- }
-
-
- const deleteCategory=async (id) => {
-      const willDelete = await swal({
-  title: "حذف کردن",
-  text: "آیا از حذف دسته اطمینان دارید",
-  icon: "warning",
-   buttons: ["انصراف", "حذف"],
-  dangerMode: true,
-});
-
-if (willDelete) {
-    try {
-        const res=await axiosJWT.delete(`http://localhost:5000/api/delete-category/${id}`,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        swal( res.data.msg, "success");
-
-    } catch (error) {
-        console.log(error);
-    }
-
-}
- }
-
 
   return (
-    <AuthContext.Provider value={{ login, error, getAllUsers,axiosJWT,token,createNews,handleNews,news,deleteNews,EditNews,createCategory,categoryList,
-getCategory,deleteCategory,updateCategory}}>
+    <AuthContext.Provider
+      value={{
+        login,
+        error,
+        getAllUsers,
+        axiosJWT,
+        token,
+        createNews,
+        handleNews,
+        news,
+        deleteNews,
+        EditNews,
+        createCategory,
+        categoryList,
+        getCategory,
+        deleteCategory,
+        updateCategory,
+        createVideo,
+        getAllVideo,
+        videoList,
+        deleteVideo
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
