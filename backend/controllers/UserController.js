@@ -20,9 +20,9 @@ export const Register = async (req, res) => {
     confPassword,
     isAdmin
   } = req.body;
-  if (password !== confPassword) {
-    return res.json("پسوورد و تکرار آن با هم برابر نیست.");
-  }
+//   if (password !== confPassword) {
+//     return res.json("پسوورد و تکرار آن با هم برابر نیست.");
+//   }
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   try {
@@ -161,9 +161,9 @@ export const deleteUser = async(req, res)=>{
 
 export const updateUser = async (req,res) =>{
   const {name, email, password, confPassword, isAdmin} = req.body;
-  if(password !== confPassword){
-    return res.json({error: "پسوورد و تکرار آن با هم برابر نیستند"})
-  }
+//   if(password !== confPassword){
+//     return res.json({error: "پسوورد و تکرار آن با هم برابر نیستند"})
+//   }
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt)
   try {

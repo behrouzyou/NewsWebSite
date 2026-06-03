@@ -16,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [admin, setAdmin] = useState(null);
   const [expire, setExpire] = useState("");
+  const [allUser, setAllUser] = useState([]);
   const [news, setNews] = useState([]);
   const[videoList,setVideoList]=useState([])
   const [categoryList, setCategoryList] = useState([]);
@@ -95,11 +96,58 @@ export const AuthContextProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      setAllUser(res.data)
+
     } catch (error) {
       console.log(error);
     }
   };
+  const Register=async (db) => {
+    const formData=new FormData()
+    formData.append("name", db.name);
+    formData.append("email", db.email);
+    formData.append("password", db.password);
+    formData.append("confirmPassword", db.confirmPassword);
+    formData.append("isAdmin", db.role);
+    formData.append("userId", userId);
+    try {
+     const res=await axiosJWT.post("http://localhost:5000/api/users/register",formData,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+     })
+
+      if(res.data.message){
+        toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+        navigate("/view-user");}
+        else{
+            toast.error(res.data, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+
+    }}
+
+     catch (error) {
+        console.log(error);
+    }
+
+  }
   const createNews = async (db) => {
     const formData = new FormData();
     formData.append("title", db.title);
@@ -314,6 +362,49 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const updateUser=async (db) => {
+    const formData=new FormData()
+    formData.append("id",db.id)
+    formData.append("name", db.name);
+    formData.append("email", db.email);
+    formData.append("password", db.password);
+    formData.append("confirmPassword", db.confirmPassword);
+    formData.append("isAdmin", db.role);
+    formData.append("userId", userId);
+    try {
+     const res=await axiosJWT.put(`http://localhost:5000/api/users/${db.id}`, formData,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+     })
+     console.log(res);
+     if(res.data.message){
+        toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+        navigate("/view-user");}else{
+            toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });}
+    } catch (error) {
+           console.log(error);
+    }
+
+  }
 
   const handleNews = async () => {
     try {
@@ -408,10 +499,40 @@ export const AuthContextProvider = ({ children }) => {
 
 
   }
+  const deleteUser=async (id) => {
+    const willDelete = await swal({
+      title: "حذف کردن",
+      text: "آیا از حذف ویدیو اطمینان دارید",
+      icon: "warning",
+      buttons: ["انصراف", "حذف"],
+      dangerMode: true,
+    });
+
+    if (willDelete) {
+      try {
+        const res = await axiosJWT.delete(
+          `http://localhost:5000/api/users/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        swal(res.data.message, "success");
+        getAllUsers()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+  }
 
   return (
     <AuthContext.Provider
       value={{
+        deleteUser,
         login,
         error,
         getAllUsers,
@@ -430,7 +551,10 @@ export const AuthContextProvider = ({ children }) => {
         createVideo,
         getAllVideo,
         videoList,
-        deleteVideo
+        deleteVideo,
+        Register,
+        allUser,
+        updateUser
       }}
     >
       {children}

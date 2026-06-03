@@ -6,6 +6,7 @@ function Sidebar() {
     const[showNews,setShowNews]=useState()
     const[showCat,setShowCat]=useState()
     const [showVideo,setShowVideo]=useState()
+    const[showUser,setShowUser]=useState()
 
   return (
     <div className="sidebar">
@@ -49,7 +50,14 @@ function Sidebar() {
             </ul>}
         </li>
         <li>
-            <Link to="">کاربران</Link>
+            <div onClick={()=>setShowUser(!showUser)}><span>کاربران</span></div>
+            { showUser &&
+               <ul>
+                <li>
+                    <Link style={{background:"white",}} to='/add-user'>افزودن کاربر </Link></li>
+                   <li> <Link style={{background:"white"}} to='/view-user'>مشاهده کاربران </Link>
+                </li>
+            </ul>}
         </li>
         <li>
             <Link to="">نظرات</Link>

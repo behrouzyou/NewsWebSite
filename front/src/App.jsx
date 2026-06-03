@@ -13,6 +13,9 @@ import AddCategory from "./admin/dashboard/components/category/AddCategory.jsx";
 import EditCategory from "./admin/dashboard/components/category/EditCategory.jsx";
 import ViewVideo from "./admin/dashboard/components/video/ViewVideo.jsx";
 import AddVideo from "./admin/dashboard/components/video/AddVideo.jsx";
+import Users from "./admin/dashboard/components/user/Users.jsx";
+import ViewUser from "./admin/dashboard/components/user/ViewUser.jsx";
+import EditUser from "./admin/dashboard/components/user/EditUser.jsx";
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
         <Route path="/edit-category" element={<EditCategory/>} />
         <Route path="/view-video" element={<ViewVideo/>}/>
         <Route path="/add-video" element={<AddVideo/>}/>
+        <Route path="/add-user"  element={<Users/>}/>
+        <Route path="/view-user"  element={<ViewUser/>}/>
+        <Route path="/edit-user"  element={<EditUser/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer  />
