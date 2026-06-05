@@ -1,12 +1,28 @@
 import "./Sidebar.css";
 import logo from "../../../../../public/images/logo.png"
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+<<<<<<< HEAD
+import { useState } from "react";
+=======
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../context/context";
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 function Sidebar() {
     const[showNews,setShowNews]=useState()
     const[showCat,setShowCat]=useState()
     const [showVideo,setShowVideo]=useState()
     const[showUser,setShowUser]=useState()
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    const {admin}=useContext(AuthContext)
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 
   return (
     <div className="sidebar">
@@ -49,6 +65,13 @@ function Sidebar() {
                 </li>
             </ul>}
         </li>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+        {admin &&
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
         <li>
             <div onClick={()=>setShowUser(!showUser)}><span>کاربران</span></div>
             { showUser &&
@@ -58,7 +81,15 @@ function Sidebar() {
                    <li> <Link style={{background:"white"}} to='/view-user'>مشاهده کاربران </Link>
                 </li>
             </ul>}
+<<<<<<< HEAD
         </li>
+=======
+<<<<<<< HEAD
+        </li>
+=======
+        </li>}
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
         <li>
             <Link to="">نظرات</Link>
         </li>

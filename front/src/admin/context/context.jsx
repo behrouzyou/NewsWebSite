@@ -18,7 +18,15 @@ export const AuthContextProvider = ({ children }) => {
   const [expire, setExpire] = useState("");
   const [allUser, setAllUser] = useState([]);
   const [news, setNews] = useState([]);
+<<<<<<< HEAD
   const[videoList,setVideoList]=useState([])
+=======
+<<<<<<< HEAD
+  const[videoList,setVideoList]=useState([])
+=======
+  const [videoList, setVideoList] = useState([]);
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
   const [categoryList, setCategoryList] = useState([]);
 
   const navigate = useNavigate();
@@ -96,14 +104,134 @@ export const AuthContextProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+<<<<<<< HEAD
       setAllUser(res.data)
 
+=======
+<<<<<<< HEAD
+      setAllUser(res.data)
+
+=======
+      setAllUser(res.data);
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     } catch (error) {
       console.log(error);
     }
   };
+<<<<<<< HEAD
   const Register=async (db) => {
     const formData=new FormData()
+=======
+<<<<<<< HEAD
+  const Register=async (db) => {
+    const formData=new FormData()
+=======
+  const [userProfile, setUserProfile] = useState([]);
+  const getProfile = async () => {
+    try {
+      const res = await axiosJWT.get(
+        "http://localhost:5000/api/users/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setUserProfile(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateProfile = async (db) => {
+    const formData = new FormData();
+    formData.append("name", db.name);
+    formData.append("password", db.password);
+    formData.append("confPassword", db.confirmPassword);
+    formData.append("id", db.id);
+    formData.append("file", db.file);
+
+    try {
+      const res = await axiosJWT.put(
+        `http://localhost:5000/api/users/profile/${db.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (res.data.msg) {
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/view-user");
+      } else {
+        toast.error(res.data, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //   const [avatar,setAvatar]=useState([])
+  //   const profile=async () => {
+  //  try {
+  //     const res= await axiosJWT.get("http:localhost:5000/api/users/profile",{
+  //         headers:{
+  //             Authorization:`Bearer ${token}`
+  //         }
+  //     })
+  //     setAvatar(res.data)
+  //     console.log(res.data.url);
+  //     if (res.data.msg) {
+  //         toast.success(res.data.msg, {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: false,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "colored",
+  //         });
+  //         navigate("/view-user");
+  //       } else {
+  //         toast.error(res.data, {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: false,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "colored",
+  //         });
+  //     }}
+  //   catch (error) {
+  //        console.log(error);
+  //  }
+  //   }
+
+  const Register = async (db) => {
+    const formData = new FormData();
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     formData.append("name", db.name);
     formData.append("email", db.email);
     formData.append("password", db.password);
@@ -111,6 +239,10 @@ export const AuthContextProvider = ({ children }) => {
     formData.append("isAdmin", db.role);
     formData.append("userId", userId);
     try {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4f0310 (upload)
      const res=await axiosJWT.post("http://localhost:5000/api/users/register",formData,{
         headers:{
             Authorization:`Bearer ${token}`
@@ -148,6 +280,49 @@ export const AuthContextProvider = ({ children }) => {
     }
 
   }
+<<<<<<< HEAD
+=======
+=======
+      const res = await axiosJWT.post(
+        "http://localhost:5000/api/users/register",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (res.data.message) {
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/view-user");
+      } else {
+        toast.error(res.data, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
   const createNews = async (db) => {
     const formData = new FormData();
     formData.append("title", db.title);
@@ -227,6 +402,10 @@ export const AuthContextProvider = ({ children }) => {
         },
       );
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4f0310 (upload)
       if(res.data.msg){
         toast.success(res.data.msg, {
         position: "top-right",
@@ -250,6 +429,35 @@ export const AuthContextProvider = ({ children }) => {
         theme: "colored",
       });
         }
+<<<<<<< HEAD
+=======
+=======
+      if (res.data.msg) {
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/view-video");
+      } else {
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     } catch (error) {
       console.log(error);
     }
@@ -267,6 +475,10 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4f0310 (upload)
   const getAllVideo=async () => {
     try {
         const res=await axiosJWT.get("http://localhost:5000/api/get-video",{
@@ -281,6 +493,23 @@ export const AuthContextProvider = ({ children }) => {
     }
 
   }
+<<<<<<< HEAD
+=======
+=======
+  const getAllVideo = async () => {
+    try {
+      const res = await axiosJWT.get("http://localhost:5000/api/get-video", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setVideoList(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 
   //    const singleNews=async (id) => {
 
@@ -362,9 +591,21 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+<<<<<<< HEAD
   const updateUser=async (db) => {
     const formData=new FormData()
     formData.append("id",db.id)
+=======
+<<<<<<< HEAD
+  const updateUser=async (db) => {
+    const formData=new FormData()
+    formData.append("id",db.id)
+=======
+  const updateUser = async (db) => {
+    const formData = new FormData();
+    formData.append("id", db.id);
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     formData.append("name", db.name);
     formData.append("email", db.email);
     formData.append("password", db.password);
@@ -372,6 +613,10 @@ export const AuthContextProvider = ({ children }) => {
     formData.append("isAdmin", db.role);
     formData.append("userId", userId);
     try {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4f0310 (upload)
      const res=await axiosJWT.put(`http://localhost:5000/api/users/${db.id}`, formData,{
         headers:{
             Authorization:`Bearer ${token}`
@@ -405,6 +650,49 @@ export const AuthContextProvider = ({ children }) => {
     }
 
   }
+<<<<<<< HEAD
+=======
+=======
+      const res = await axiosJWT.put(
+        `http://localhost:5000/api/users/${db.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log(res);
+      if (res.data.message) {
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/view-user");
+      } else {
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 
   const handleNews = async () => {
     try {
@@ -418,6 +706,15 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+  //                  DELETE METHOD
+
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
   const deleteNews = async (id) => {
     const willDelete = await swal({
       title: "حذف کردن",
@@ -471,8 +768,18 @@ export const AuthContextProvider = ({ children }) => {
       }
     }
   };
+<<<<<<< HEAD
   const deleteVideo=async (id) => {
      const willDelete = await swal({
+=======
+<<<<<<< HEAD
+  const deleteVideo=async (id) => {
+     const willDelete = await swal({
+=======
+  const deleteVideo = async (id) => {
+    const willDelete = await swal({
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
       title: "حذف کردن",
       text: "آیا از حذف ویدیو اطمینان دارید",
       icon: "warning",
@@ -491,15 +798,34 @@ export const AuthContextProvider = ({ children }) => {
           },
         );
         swal(res.data.msg, "success");
+<<<<<<< HEAD
         getAllVideo()
+=======
+<<<<<<< HEAD
+        getAllVideo()
+=======
+        getAllVideo();
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
       } catch (error) {
         console.log(error);
       }
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4f0310 (upload)
 
 
   }
   const deleteUser=async (id) => {
+<<<<<<< HEAD
+=======
+=======
+  };
+  const deleteUser = async (id) => {
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     const willDelete = await swal({
       title: "حذف کردن",
       text: "آیا از حذف ویدیو اطمینان دارید",
@@ -520,18 +846,101 @@ export const AuthContextProvider = ({ children }) => {
         );
 
         swal(res.data.message, "success");
+<<<<<<< HEAD
         getAllUsers()
+=======
+<<<<<<< HEAD
+        getAllUsers()
+=======
+        getAllUsers();
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
       } catch (error) {
         console.log(error);
       }
     }
+<<<<<<< HEAD
 
 
   }
+=======
+<<<<<<< HEAD
+
+
+  }
+=======
+  };
+
+  //        HOME PAGE
+  const [video, setVideo] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const LoadVideo = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("http://localhost:5000/api/single-video");
+
+      if (res.data) {
+        setVideo(res.data.url);
+        setLoading(false);
+      } else {
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+   const [lastNews, setLastNews] = useState([]);
+  const [loadingLastNews, setLoadingLastNews] = useState(false);
+  const LoadLastNews = async () => {
+    try {
+      setLoadingLastNews(true);
+      const res = await axios.get("http://localhost:5000/api/news/lastnews");
+   
+
+      if (res.data) {
+        setLastNews(res.data);
+        setLoadingLastNews(false);
+      } else {
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 
   return (
     <AuthContext.Provider
       value={{
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+        lastNews,
+        loadingLastNews,
+        LoadLastNews,
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
         deleteUser,
         login,
         error,
@@ -554,7 +963,22 @@ export const AuthContextProvider = ({ children }) => {
         deleteVideo,
         Register,
         allUser,
+<<<<<<< HEAD
         updateUser
+=======
+<<<<<<< HEAD
+        updateUser
+=======
+        updateUser,
+        admin,
+        userProfile,
+        getProfile,
+        updateProfile,
+        video,
+        loading,
+        LoadVideo,
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
       }}
     >
       {children}

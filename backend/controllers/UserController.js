@@ -121,7 +121,15 @@ export const Logout = async(req,res)=> {
   try {
     const refreshToken = req.cookies.refreshToken;
     if(!refreshToken) return res.json("توکن پیدا نشد")
+<<<<<<< HEAD
     const user = await Users.findOne({refresh_token: refreshToken});
+=======
+<<<<<<< HEAD
+    const user = await Users.findOne({refresh_token: refreshToken});
+=======
+    const user = await Users.findOne({where:{refresh_token: refreshToken}});
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
     if(!user) return res.json("کاربر پیدا نشد")
     const clr = null;
     await Users.update({
@@ -207,7 +215,15 @@ export const updateProfile = async(req,res)=>{
     if(!allowedType.includes(ext.toLowerCase())){
       return res.json("jpeg jpg png عکس معتبر نیست * فرمت های مجاز ")
     }
+<<<<<<< HEAD
     if(fileSize > 1000000) return res.json("حجم عکس نباید بیشتر از 1 مگابایت باشد")
+=======
+<<<<<<< HEAD
+    if(fileSize > 1000000) return res.json("حجم عکس نباید بیشتر از 1 مگابایت باشد")
+=======
+    if(fileSize > 3000000) return res.json("حجم عکس نباید بیشتر از 3 مگابایت باشد")
+>>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
+>>>>>>> c4f0310 (upload)
 
     if(avatar.image){
       const filePath = `./public/avatars/${avatar.image}`
