@@ -1,0 +1,42 @@
+.sidebar{
+       width: 300px;
+    height: 100vh;
+    padding: 30px 0 0 0;
+    background: rgb(255, 255, 255);
+}
+.sidebar ul{
+    padding: 0 15px;
+
+}
+.sidebar ul li{
+    margin: 10px 0;
+    padding: 10px 5px;
+    border-bottom: 1px solid rgb(235, 235, 235);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.sidebar ul li a{
+    color: #777;
+}
+
+.sidebar ul li:hover{
+    background: rgb(231, 231, 231);
+}
+
+@media screen and (max-width:1400px) {
+    .sidebar{
+        width: 200px;
+    }
+    .sidebar .logo img{
+        width: 100px;
+    }
+
+}
+@media screen and (max-width:992px) {
+    .sidebar{
+        width: 80px;
+    }
+
+
+}
