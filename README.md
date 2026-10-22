@@ -13,36 +13,12 @@ A full-stack news publishing website with a React frontend and an Express/Sequel
 - `backend/` — Express API, Sequelize models, routes, middleware, and public uploads
 
 ## Setup
+Requires Node.js, npm, and MySQL. In `backend/`, install dependencies and configure the local environment using `.env.example` copied to `.env`. Then start the API with `npm start`; the current server listens on port `5000`.
 
-### Backend
-Requires a supported Node.js version and a MySQL database.
-
-```bash
-cd backend
-npm install
-```
-
-Copy `.env.example` to `.env` and fill in the database settings and any email/authentication configuration used by the application. Then start the API:
-
-```bash
-npm start
-```
-
-The current server code listens on port `5000`.
-
-### Frontend
-In a second terminal:
-
-```bash
-cd front
-npm install
-npm run dev
-```
-
-Vite prints the local frontend URL.
+In a second terminal, run `cd front && npm install && npm run dev`. Vite prints the local frontend URL.
 
 ## Important project status
-The current frontend files contain Git merge-conflict markers in at least `package.json` and `src/App.jsx`. Resolve these conflicts before expecting `npm install` or the production build to work reliably. Review CORS/API URLs before deployment.
+The current frontend files contain Git merge-conflict markers in at least `package.json` and `src/App.jsx`. Resolve these before expecting dependency installation or a production build to work reliably. Review CORS/API URLs before deployment.
 
 ## Security
-Never commit `.env` files or production credentials. The backend reads database settings from environment variables; rotate any credentials that were previously committed to Git history.
+Never commit `.env` files or production credentials. Rotate any database credentials that were previously committed to Git history.
