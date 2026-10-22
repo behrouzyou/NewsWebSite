@@ -1,11 +1,13 @@
 import "./index.css";
 import "../node_modules/bulma/css/bulma.css";
-import Login from "./admin/auth/Login";
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "./pages/NotFound.jsx";
 import { ToastContainer } from "react-toastify";
-import ViewNews from "./admin/dashboard/components/news/ViewNews.jsx";
+
+import { AuthContext } from "./admin/context/context.jsx";
+import Login from "./admin/auth/Login";
 import Base from "./admin/dashboard/components/main/Base.jsx";
+import ViewNews from "./admin/dashboard/components/news/ViewNews.jsx";
 import AddNews from "./admin/dashboard/components/news/AddNews.jsx";
 import EditNews from "./admin/dashboard/components/news/EditNews.jsx";
 import ViewCategory from "./admin/dashboard/components/category/ViewCategory.jsx";
@@ -16,74 +18,31 @@ import AddVideo from "./admin/dashboard/components/video/AddVideo.jsx";
 import Users from "./admin/dashboard/components/user/Users.jsx";
 import ViewUser from "./admin/dashboard/components/user/ViewUser.jsx";
 import EditUser from "./admin/dashboard/components/user/EditUser.jsx";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> c4f0310 (upload)
-
-function App() {
-  return (
-    <>
-
-      <Routes>
-        <Route path="/administrator" element={<Login />} />
-
-<<<<<<< HEAD
-=======
-=======
-import { AuthContext } from "./admin/context/context.jsx";
-import { useContext } from "react";
 import EditProfile from "./admin/dashboard/components/user/EditProfile.jsx";
+
+import NotFound from "./pages/NotFound.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
 import Detail from "./pages/Detail.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 
-
 function App() {
   const { admin } = useContext(AuthContext);
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomeScreen/>}/>
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-
-
-
-
-
-
-
-
-
         <Route path="/administrator" element={<Login />} />
->>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
->>>>>>> c4f0310 (upload)
         <Route path="/dashboard" element={<Base />} />
         <Route path="/view-news" element={<ViewNews />} />
         <Route path="/add-news" element={<AddNews />} />
         <Route path="/edit-news/:id" element={<EditNews />} />
         <Route path="/view-category" element={<ViewCategory />} />
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> c4f0310 (upload)
-        <Route path="/add-category" element={<AddCategory/>} />
-        <Route path="/edit-category" element={<EditCategory/>} />
-        <Route path="/view-video" element={<ViewVideo/>}/>
-        <Route path="/add-video" element={<AddVideo/>}/>
-        <Route path="/add-user"  element={<Users/>}/>
-        <Route path="/view-user"  element={<ViewUser/>}/>
-        <Route path="/edit-user"  element={<EditUser/>}/>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <ToastContainer  />
-<<<<<<< HEAD
-=======
-=======
         <Route path="/add-category" element={<AddCategory />} />
         <Route path="/edit-category" element={<EditCategory />} />
         <Route path="/view-video" element={<ViewVideo />} />
@@ -99,8 +58,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer />
->>>>>>> d5cc3fe (landing page Create(navbar,top side,news, video news)CRUD)
->>>>>>> c4f0310 (upload)
     </>
   );
 }
