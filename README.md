@@ -18,7 +18,7 @@ Requires Node.js, npm, and MySQL. In `backend/`, install dependencies and config
 In a second terminal, run `cd front && npm install && npm run dev`. Vite prints the local frontend URL.
 
 ## Important project status
-The current frontend files contain Git merge-conflict markers in at least `package.json` and `src/App.jsx`. Resolve these before expecting dependency installation or a production build to work reliably. Review CORS/API URLs before deployment.
+The frontend package manifest, application routes, and lockfile had committed merge-conflict markers; these have been cleaned up, but the project still needs a local install/build check. Review CORS/API URLs before deployment.
 
 ## Security
 Never commit `.env` files or production credentials. Rotate any database credentials that were previously committed to Git history.
